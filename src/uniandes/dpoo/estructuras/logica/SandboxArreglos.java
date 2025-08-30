@@ -40,9 +40,12 @@ public class SandboxArreglos
      * Retorna una copia del arreglo de enteros, es decir un nuevo arreglo del mismo tamaño que contiene copias de los valores del arreglo original
      * @return Una copia del arreglo de enteros
      */
-    public int[] getCopiaEnteros( )
-    {
-        return null;
+    public int[] getCopiaEnteros() {
+        int[] copia = new int[arregloEnteros.length];
+        for (int i = 0; i < arregloEnteros.length; i++) {
+            copia[i] = arregloEnteros[i];
+        }
+        return copia;
     }
 
     /**
