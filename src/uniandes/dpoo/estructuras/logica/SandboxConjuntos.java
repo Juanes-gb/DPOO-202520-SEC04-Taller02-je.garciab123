@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Esta clase tiene un conjunto de métodos para practicar operaciones sobre conjuntos implementados usando un árbol (TreeSet).
@@ -39,7 +41,7 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoLista( )
     {
-        return null;
+    	return new ArrayList<>(this.arbolCadenas);
     }
 
     /**
@@ -48,7 +50,7 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoListaInvertida( )
     {
-        return null;
+    	return new ArrayList<>(this.arbolCadenas.descendingSet());
     }
 
     /**
@@ -59,7 +61,7 @@ public class SandboxConjuntos
      */
     public String getPrimera( )
     {
-        return null;
+    	return this.arbolCadenas.isEmpty() ? null : this.arbolCadenas.first();
     }
 
     /**
@@ -70,7 +72,7 @@ public class SandboxConjuntos
      */
     public String getUltima( )
     {
-        return null;
+    	return this.arbolCadenas.isEmpty() ? null : this.arbolCadenas.last();
     }
 
     /**
@@ -80,7 +82,8 @@ public class SandboxConjuntos
      */
     public Collection<String> getSiguientes( String cadena )
     {
-        return null;
+    	if (cadena == null || this.arbolCadenas.isEmpty()) return Collections.emptyList();
+        return this.arbolCadenas.tailSet(cadena, true);
     }
 
     /**
@@ -89,7 +92,7 @@ public class SandboxConjuntos
      */
     public int getCantidadCadenas( )
     {
-        return -1;
+    	return this.arbolCadenas.size();
     }
 
     /**
@@ -101,7 +104,7 @@ public class SandboxConjuntos
      */
     public void agregarCadena( String cadena )
     {
-
+    	if (cadena != null) this.arbolCadenas.add(cadena);
     }
 
     /**
@@ -110,7 +113,7 @@ public class SandboxConjuntos
      */
     public void eliminarCadena( String cadena )
     {
-
+    	if (cadena != null) this.arbolCadenas.remove(cadena);
     }
 
     /**
@@ -119,7 +122,16 @@ public class SandboxConjuntos
      */
     public void eliminarCadenaSinMayusculasOMinusculas( String cadena )
     {
+    	if (cadena == null) return;
+        String objetivo = cadena.toLowerCase();
 
+        TreeSet<String> nuevo = new TreeSet<>();
+        for (String s : this.arbolCadenas) {
+            if (s != null && !s.toLowerCase().equals(objetivo)) {
+                nuevo.add(s);
+            }
+        }
+        this.arbolCadenas = nuevo;
     }
 
     /**
@@ -127,7 +139,8 @@ public class SandboxConjuntos
      */
     public void eliminarPrimera( )
     {
-
+    	String primera = this.getPrimera();
+        if (primera != null) this.arbolCadenas.remove(primera);
     }
 
     /**
@@ -138,7 +151,12 @@ public class SandboxConjuntos
      */
     public void reiniciarConjuntoCadenas( List<Object> objetos )
     {
-
+    	this.arbolCadenas = new TreeSet<>();
+        if (objetos != null) {
+            for (Object o : objetos) {
+                if (o != null) this.arbolCadenas.add(o.toString());
+            }
+        }
     }
 
     /**
@@ -148,6 +166,11 @@ public class SandboxConjuntos
      */
     public void volverMayusculas( )
     {
+    	List<String> copia = new ArrayList<>(this.arbolCadenas);
+        this.arbolCadenas.clear();
+        for (String s : copia) {
+            if (s != null) this.arbolCadenas.add(s.toUpperCase());
+        }
     }
 
     /**
@@ -155,7 +178,9 @@ public class SandboxConjuntos
      */
     public TreeSet<String> invertirCadenas( )
     {
-        return null;
+    	TreeSet<String> invertido = new TreeSet<>(Collections.reverseOrder());
+        invertido.addAll(this.arbolCadenas);
+        return invertido;
     }
 
     /**
@@ -165,7 +190,11 @@ public class SandboxConjuntos
      */
     public boolean compararElementos( String[] otroArreglo )
     {
-        return false;
+    	if (otroArreglo == null) return true;
+        for (String s : otroArreglo) {
+            if (s == null || !this.arbolCadenas.contains(s)) return false;
+        }
+        return true;
     }
 
 }
